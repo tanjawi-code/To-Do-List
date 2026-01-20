@@ -1,0 +1,107 @@
+*
+*::after,
+*::before {
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    counter-reset: tasksTitles;
+}
+
+body {
+    background-color: #323131;
+}
+
+button {
+    padding: 5px 15px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #b8bbbe;
+}
+
+button:active {
+    background-color: #737577;
+}
+
+header {
+    background-color: #434242;
+    color: white;
+    padding: 1em 0;
+}
+
+h1 {
+    text-align: center;
+    margin-left: 2rem;
+}
+
+main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+main .tasks {
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
+    padding: 0.5em 1em;
+    border-bottom: 1px solid #ccc;
+}
+
+main .tasks h2 {
+    align-self: center;
+}
+
+main .tasks button {
+    align-self: center;
+    width: 50%;
+}
+
+main .tasks .div-task-info{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    display: none;
+}
+
+main .tasks .div-task-info input {
+    margin-block: 0.5rem;
+    width: 70%;
+    padding: 0.5em;
+    border: none;
+    border-radius: 5px;
+    margin-right: 1em;
+    font-weight: bold;
+}
+
+main .div-task-info #message {
+    font-weight: bold;
+    margin-top: 20px;
+    color: #ff0000;
+    font-size: 1.2rem;
+}
+
+main .tasks #user-tasks h2 {
+    counter-increment: tasksTitles;
+    color: #fff;
+}
+
+main .tasks #user-tasks h2::before {
+    content: counter(tasksTitles) ". ";
+}
+
+main .tasks #user-tasks p {
+    color: rgb(0, 187, 255);
+    font-weight: bold;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin-left: 20px;
+    margin-top: 5px;
+}
