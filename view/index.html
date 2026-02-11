@@ -12,21 +12,52 @@
     </header>
 
     <main>
-        <section>
+        <section class="section-info">
+            <div>
+                <form action="" id="formTask">
+                    <input type="text" id="addTask" placeholder="Add a new task" autocomplete="off">
+                    <button type="submit" id="addTaskBtn">Add</button>
+                </form>
+            </div>
             
+            <div id="div-choices">
+                <button id="selectAllTasks">Select All</button>
+                <button id="deselectAllTasks">Deselect All</button>
+
+                <select name="" id="tasksCategoreis">
+                    <option value="default">default</option>
+                </select>
+            </div>
+
+            <div>
+                <p id="message"></p>
+            </div>
         </section>
         
-        <section>
-
-        </section>
-        
-        <section>
-
+        <section class="tasks-section">
+            <ul>
+                <li>
+                    <input type="checkbox" name="" id="checkbox1">
+                    <label for="checkbox1" class="custome-checkbox">
+                        <img width="25" src="icons/check_box_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg" alt="A select icon">
+                    </label>
+                    <label class="task-title" for="checkbox1">Go buy fruits</label>
+                    <button>
+                        <img width="15" src="icons/delete_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg" alt="A delete icon">
+                    </button>
+                </li>
+                <li>
+                    <input type="checkbox" name="" id="checkbox2">
+                    <label for="checkbox2" class="custome-checkbox">
+                        <img src="icons/check_box_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg" alt="A select icon">
+                    </label>
+                    <label class="task-title" for="checkbox2">Go buy vegetables</label>
+                    <button>
+                        <img width="15" src="icons/delete_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg" alt="A delete icon">
+                    </button>
+                </li>
+            </ul>
         </section>
     </main>
-    
-    <footer>
-
-    </footer>
 </body>
 </html>

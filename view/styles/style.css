@@ -1,0 +1,172 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    background-color: rgba(84, 82, 82, 0.813);
+}
+
+h1 {
+    text-transform: uppercase;
+    margin-top: 50px;
+    color: rgb(0, 255, 0);
+    font-size: 3rem;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    gap : 20px;
+    width: 700px;
+    max-width: 100%;
+}
+
+/* The first section of handling adding tasks and a few things */
+.section-info {
+    background-color: rgba(68, 65, 65, 0.598);
+    font-weight: bold;
+    padding: 20px;
+    border-radius: 50px;
+}
+
+.section-info #addTask {
+    width: 100%;
+    padding: 12px 20px;
+    font: inherit;
+    border-radius: 100px;
+    background-color: none;
+    border: solid 2px rgba(123, 114, 114, 0.724);
+    caret-color: #484343;
+}
+
+.section-info #addTask:focus{
+    outline: none;
+}
+
+form {
+    position: relative;
+}
+
+.section-info #addTaskBtn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    padding: 10px;
+    background-color: rgb(0, 255, 38);
+    border-radius: 20px;
+    border: none;
+    font: inherit;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.section-info #div-choices {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 10px;
+}
+
+.section-info #div-choices button{
+    background-color: rgba(145, 184, 177, 0.856);
+    color: rgb(255, 255, 255);
+    padding: 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    border: none;
+    font: inherit;
+}
+
+.section-info #div-choices select {
+    padding: 10px;
+    border: none;
+    border-radius: 20px;
+    font: inherit;
+    cursor: pointer;
+}
+
+/* The second section of handling tasks */
+.tasks-section ul li {
+    background-color: #484343;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    border-radius: 20px;
+    margin-bottom: 15px;
+    color: rgb(255, 255, 255);
+}
+
+.tasks-section ul li .task-title {
+    padding: 10px;
+    padding-right: 0;
+    transition: 200ms ease;
+    flex-grow: 1;
+}
+
+.tasks-section button {
+    background: none;
+    background-color: rgb(255, 0, 0);
+    border: none;
+    border-radius: 10px;
+    padding: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tasks-section input {
+    display: none;
+}
+
+.tasks-section ul .custome-checkbox{
+    border-radius: 30px;
+    border: solid 2px rgb(60, 181, 230);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    transition: 200ms ease;
+    cursor: pointer;
+}
+
+input[type="checkbox"]:checked ~ .custome-checkbox{
+    background-color: rgb(0, 255, 0);
+}
+
+input[type="checkbox"]:checked ~ .task-title{
+    text-decoration: line-through;
+    color: rgb(173, 168, 168);
+}
+
+/* Responose design for mobiles */
+@media (max-width: 500px) {
+    html {
+        font-size: 12pt;
+    }
+    h1 {
+        margin-top: 0;
+        font-size: 2rem;
+    }
+
+    .section-info #formTask #addTaskBtn {
+        position: unset;
+        width: 100%;
+        margin-top: 10px;
+        padding: 15px;
+        height: auto;
+    }
+}
