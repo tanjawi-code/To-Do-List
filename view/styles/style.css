@@ -55,7 +55,7 @@ main {
     outline: none;
 }
 
-form {
+#formAddTask {
     position: relative;
 }
 
@@ -103,13 +103,14 @@ form {
     background-color: #484343;
     display: flex;
     align-items: center;
-    padding: 0 12px;
+    padding: 5px 10px;
     border-radius: 20px;
     margin-bottom: 15px;
     color: rgb(255, 255, 255);
 }
 
 .tasks-section ul li .task-title {
+    font-size: 1.2rem;
     padding: 10px;
     padding-right: 0;
     transition: 200ms ease;
