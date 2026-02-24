@@ -2,7 +2,6 @@
 
 const displayMessage = document.getElementById('message')
 const tasksList = document.querySelector('ul')
-const displayTasks = document.querySelectorAll('ul li')
 let taskIndex = 0 
 
 // Add a task:
@@ -11,31 +10,30 @@ async function addTask(e) {
     const formData = new FormData(this)
     const task = formData.get('addTask')
     
-    if (task !== '') {
-        try {
-            taskIndex++
-            const response = await fetch(`http://localhost:8000/API/Routes`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({task, taskIndex})
-            });
+    try {
+        taskIndex++
+        const response = await fetch(`http://localhost:8000/API/Routes`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({task, taskIndex})
+        });
 
-            if (!response.ok) {
-                taskIndex--
-                return new Error('Failed to send an HTTP request (method:POST)')
-            }
+        if (!response.ok) {
+            taskIndex--
+            const errorMessage = await response.json()
+            throw new Error(errorMessage.message)
+        }
 
+        else {
             const data = await response.json()
+            displayMessage.textContent = ''
             createElements(data)
         }
-        catch (error) {
-            console.error(error)
-        }
     }
-    else {
-        displayMessage.textContent = 'The task title is required'
+    catch (error) {
+        displayMessage.textContent = `${error.message}`
         displayMessage.style.color = '#ff0000'
     }
 }
@@ -48,7 +46,7 @@ function createElements(data) {
     li.appendChild(inputElement(data.taskIndex))
     li.appendChild(selectLabelElement(data.taskIndex))
     li.appendChild(taskLabelElement(data))
-    li.appendChild(deleteButtonElement(data.taskIndex))
+    li.appendChild(deleteButtonElement())
 
     tasksList.appendChild(li)
 }
@@ -78,6 +76,7 @@ function selectLabelElement(taskIndex) {
 // Create a label for the task.
 function taskLabelElement(data) {
     const taskLabel = document.createElement('label')
+    taskLabel.id = `task${data.taskIndex}`
     taskLabel.htmlFor = `checkbox${data.taskIndex}`
     taskLabel.className = 'task-title'
     taskLabel.textContent = `${data.task}`
@@ -85,57 +84,54 @@ function taskLabelElement(data) {
     return taskLabel
 }
 // Create a delete button that holds a delete icon.
-function deleteButtonElement(taskIndex) {
+function deleteButtonElement() {
     const deleteIcon = document.createElement('img')
     deleteIcon.width = "20"
     deleteIcon.src = "../icons/delete_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg"
     deleteIcon.alt = "A delete icon"
 
     const deleteButton = document.createElement('button')
-    deleteButton.type = 'submit'
     deleteButton.appendChild(deleteIcon)
 
-    const form = document.createElement('form')
-    form.id = `formDelete${taskIndex}`
-    form.appendChild(deleteButton)
+    // Handle the user clicks on the button.
+    deleteButton.addEventListener('click' , () => {
+        const liElement = deleteButton.parentElement
+        const taskLabel = liElement.querySelector(`#task${liElement.id}`)
+        submitDeleteTask(liElement, taskLabel)
+    })
 
-    return form
+    return deleteButton
 }
 
 const formAdd = document.getElementById('formAddTask')
 formAdd.addEventListener("submit", addTask)
 
-// Delete task:
-function deleteTask(e) {
-    e.preventDefault()
-    const formData = new FormData(this)
-    
-    document.querySelectorAll('ul form button').forEach((button) => {
-        button.addEventListener('click', () => {
-            const selectedFormDelete = button.parentElement
-            const liElement = selectedFormDelete.parentElement
-            selectedFormDelete.addEventListener('submit', submitDeleteTask(liElement))
-        })
-    })
-}
-
-// Submiting deletion after clicking a button (part of deleteTask function).
-async function submitDeleteTask(liElement) {
+// Submiting deletion after clicking a button (part of deleteButtonElement function).
+async function submitDeleteTask(liElement, taskLabel) {
     const liElementID = Number(liElement.id)
+    const taskTitle = taskLabel.textContent
 
     try {
         const response = await fetch(`http://localhost:8000/API/Routes/${liElementID}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
-            }
+            },
+            body: JSON.stringify({taskTitle})
         })
 
         if (!response.ok) {
-            return new Error('Failed to delete the task')
+            const errorMessage = await response.json()
+            throw new Error(errorMessage.message)
         }
+
+        const data = await response.json()
+        displayMessage.textContent = `${data.sucussMessage}`
+        displayMessage.style.color = '#ffffff'
+        tasksList.removeChild(liElement)
     }
     catch(error) {
-        console.error(error)
+        displayMessage.textContent = `${error.message}`
+        displayMessage.style.color = '#ff0000'
     }
 }
